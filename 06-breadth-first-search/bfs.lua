@@ -1,5 +1,5 @@
 -- simple implementaion of queue
-queue = {}
+local queue = {}
 
 function queue:new()
     self.__index = self
@@ -30,18 +30,15 @@ function BFS(graph, init, target)
 
     for _, value in pairs(graph[init]) do
         searchque:push(value)
-        print(value)
-        print(searchque[_])
     end
     
-    local function search(searchque, searched)
-        if searchque:len() <= 0 then
-            return false
-        end
-        
-        local node = searchque:pop()
+    local searched = {}
 
+    while searchque:len() > 0 do
+        local node = searchque:pop()
+        
         if not searched[node] then
+
             if node == target then
                 return true
             end
@@ -51,14 +48,15 @@ function BFS(graph, init, target)
             end
             
             searched[node] = true
+            
         end
-
-        return search(searched, searched)
     end
-    
-    return search(searchque, {})
+
+    return false
+
 end
 
+-- exemple test
 local graph = {}
 graph["you"] = {"alice", "bob", "claire"}
 graph["bob"] = {"anuj", "peggy"}
@@ -69,4 +67,4 @@ graph["peggy"] = {}
 graph["thom"] = {}
 graph["jonny"] = {}
 
-print(BFS(graph, 'you', 'bob'))
+print(BFS(graph, 'you', 'jonny'))
